@@ -1,25 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { Component } from "react";
+import Sketch from "react-p5";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const capture = 0;
+
+  const setup = (p5, canvasParentRef) => {
+    p5.createCanvas(500, 400).parent(canvasParentRef)
+    capture = p5.createCapture(p5.VIDEO);
+    capture.size(320, 240);
+  }
+
+  const draw = p5 => {
+    p5.background(255);
+    p5.image(capture, 0, 0, 320, 240);
+    capture.loadPixels();
+
+    let withRatio = capture.width / width;
+    let heightRatio = capture.height / height;
+
+  }
+
+  return <Sketch setup={setup} draw={draw} />
 }
 
-export default App;
+export default App
